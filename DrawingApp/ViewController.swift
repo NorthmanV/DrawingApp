@@ -9,12 +9,26 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var mainImageView: UIImageView!
+    @IBOutlet weak var tempImageView: UIImageView!
+    @IBOutlet weak var colorsStackView: UIStackView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        colorsStackView.arrangedSubviews.forEach {
+            $0.layer.cornerRadius = $0.bounds.width / 2
+        }
     }
 
-
+    @IBAction func resetPressed(_ sender: UIButton) {
+    }
+    
+    @IBAction func sharePressed(_ sender: UIButton) {
+    }
+    
+    @IBAction func colorPressed(_ sender: UIButton) {
+    }
+    
 }
 
