@@ -72,6 +72,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func resetPressed(_ sender: UIButton) {
+        mainImageView.image = nil
     }
     
     @IBAction func sharePressed(_ sender: UIButton) {
@@ -83,6 +84,26 @@ class ViewController: UIViewController {
         if pencil == .eraser {
             opacity = 1
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let navController = segue.destination as? UINavigationController,
+              let settingsVC = navController.topViewController as? SettingsViewController
+        else { return }
+        settingsVC.delegate = self
+        settingsVC.brush = brushWidth
+        settingsVC.opacity = opacity
+    }
+    
+}
+
+// MARK: - SettingsViewControllerDelegate
+
+extension ViewController: SettingsViewControllerDelegate {
+    
+    func settingsViewControllerFinished(_ settingsViewController: SettingsViewController) {
+        brushWidth = settingsViewController.brush
+        opacity = settingsViewController.opacity
     }
     
 }

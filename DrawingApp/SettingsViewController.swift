@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SettingsViewControllerDelegate: class {
+    func settingsViewControllerFinished(_ settingsViewController: SettingsViewController)
+}
+
 class SettingsViewController: UIViewController {
     
     @IBOutlet weak var brushSlider: UISlider!
@@ -22,17 +26,57 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var blueSlider: UISlider!
     @IBOutlet weak var blueLabel: UILabel!
     
+    var brush: CGFloat = 10
+    var opacity: CGFloat = 1
+    var red: CGFloat = 0
+    var green: CGFloat = 0
+    var blue: CGFloat = 0
+    var delegate: SettingsViewControllerDelegate?
+    
     @IBAction func closePressed(_ sender: UIBarButtonItem) {
+        delegate?.settingsViewControllerFinished(self)
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func brushChanged(_ sender: UISlider) {
+        brush = CGFloat(sender.value)
+        brushLabel.text = String(format: "%.1f", brush)
+        drawPreview()
     }
     
-    @IBAction func opacityChabged(_ sender: UISlider) {
+    @IBAction func opacityChanged(_ sender: UISlider) {
+        opacity = CGFloat(sender.value)
+        opacityLabel.text = String(format: "%.1f", opacity)
+        drawPreview()
     }
     
     @IBAction func colorChanged(_ sender: UISlider) {
     }
     
+    func drawPreview() {
+        UIGraphicsBeginImageContext(previewImageView.frame.size)
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        context.setLineCap(.round)
+        context.setLineWidth(brush)
+        context.setStrokeColor(UIColor(red: red, green: green, blue: blue, alpha: opacity).cgColor)
+        context.move(to: CGPoint(x: 45, y: 45))
+        context.addLine(to: CGPoint(x: 45, y: 45))
+        context.strokePath()
+        previewImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+    }
+    
+    
+    // In order to UIResponder doesn't pass touches to the underlying view controller
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        return
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        return
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        return
+    }
 }

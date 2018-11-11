@@ -246,7 +246,7 @@
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="yUn-5G-BPZ">
                                 <rect key="frame" x="89.5" y="142" width="227.5" height="31"/>
                                 <connections>
-                                    <action selector="opacityChabged:" destination="XyB-zi-YVX" eventType="valueChanged" id="9yf-ia-G0c"/>
+                                    <action selector="opacityChanged:" destination="XyB-zi-YVX" eventType="valueChanged" id="9yf-ia-G0c"/>
                                 </connections>
                             </slider>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mGl-3q-ArV">
