@@ -33,6 +33,21 @@ class SettingsViewController: UIViewController {
     var blue: CGFloat = 0
     var delegate: SettingsViewControllerDelegate?
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        brushSlider.value = Float(brush)
+        brushLabel.text = String(format: "%.1f", brush)
+        opacitySlider.value = Float(opacity)
+        opacityLabel.text = String(format: "%.1f", opacity)
+        redSlider.value = Float(red * 255)
+        redLabel.text = Int(redSlider.value).description
+        greenSlider.value = Float(green * 255)
+        greenLabel.text = Int(greenSlider.value).description
+        blueSlider.value = Float(blue * 255)
+        blueLabel.text = Int(blueSlider.value).description
+        drawPreview()
+    }
+    
     @IBAction func closePressed(_ sender: UIBarButtonItem) {
         delegate?.settingsViewControllerFinished(self)
         dismiss(animated: true, completion: nil)
@@ -51,6 +66,13 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func colorChanged(_ sender: UISlider) {
+        red = CGFloat(redSlider.value / 255)
+        redLabel.text = Int(redSlider.value).description
+        green = CGFloat(greenSlider.value / 255)
+        greenLabel.text = Int(greenSlider.value).description
+        blue = CGFloat(blueSlider.value / 255)
+        blueLabel.text = Int(blueSlider.value).description
+        drawPreview()
     }
     
     func drawPreview() {

@@ -76,6 +76,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func sharePressed(_ sender: UIButton) {
+        guard let image = mainImageView.image else { return }
+        let activity = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        present(activity, animated: true, completion: nil)
     }
     
     @IBAction func colorPressed(_ sender: UIButton) {
@@ -93,6 +96,13 @@ class ViewController: UIViewController {
         settingsVC.delegate = self
         settingsVC.brush = brushWidth
         settingsVC.opacity = opacity
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        color.getRed(&red, green: &green, blue: &blue, alpha: nil)
+        settingsVC.red = red
+        settingsVC.green = green
+        settingsVC.blue = blue
     }
     
 }
@@ -104,6 +114,7 @@ extension ViewController: SettingsViewControllerDelegate {
     func settingsViewControllerFinished(_ settingsViewController: SettingsViewController) {
         brushWidth = settingsViewController.brush
         opacity = settingsViewController.opacity
+        color = UIColor(red: settingsViewController.red, green: settingsViewController.green, blue: settingsViewController.blue, alpha: 1)
     }
     
 }
